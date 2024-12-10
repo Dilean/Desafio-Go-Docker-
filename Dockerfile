@@ -1,7 +1,8 @@
 FROM golang:alpine3.21 AS builder
 WORKDIR /app
-COPY . .
-RUN go build -o /main app.go
+COPY go.mod .
+COPY app.go .
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /main
 
 FROM scratch
 WORKDIR /
